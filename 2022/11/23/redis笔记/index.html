@@ -28,7 +28,7 @@
 <meta property="og:description" content="注：此篇文章脱胎于尚硅谷redis课程的笔记文件，另外加上自己遇到的问题和疑惑 redis简介redis和传统关系型数据库有什么不同？ Redis是一种基于键值对的NoSQL数据库，而键值对的值是由多种数据结构和算法组成的。Redis的数据都存储于内存中，因此它的速度惊人，读写性能可达10万&#x2F;秒，远超关系型数据库。  关系型数据库是基于二维数据表来存储数据的，它的数据格式更为严谨，并支持">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-11-23T07:17:27.000Z">
-<meta property="article:modified_time" content="2022-11-23T08:10:41.462Z">
+<meta property="article:modified_time" content="2022-11-23T15:40:14.819Z">
 <meta property="article:author" content="fx">
 <meta property="article:tag" content="redis">
 <meta property="article:tag" content="学习笔记">
@@ -177,7 +177,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-11-23 15:17:27 / 修改时间：16:10:41" itemprop="dateCreated datePublished" datetime="2022-11-23T15:17:27+08:00">2022-11-23</time>
+              <time title="创建时间：2022-11-23 15:17:27 / 修改时间：23:40:14" itemprop="dateCreated datePublished" datetime="2022-11-23T15:17:27+08:00">2022-11-23</time>
             </span>
 
           
@@ -467,7 +467,162 @@
 <td>返回两个集合的差集元素(key1中的，不包含key2中的)</td>
 </tr>
 </tbody></table>
-<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2>
+<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><p>Hash类型对应的数据结构是两种：ziplist（压缩列表），hashtable（哈希表）。当field-value长度较短且个数较少时，使用ziplist，否则使用hashtable。</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>hset <key><field><value></td>
+<td>给<key>集合中的 <field>键赋值<value></td>
+</tr>
+<tr>
+<td>hget <key1><field></td>
+<td>从<key1>集合<field>取出 value</td>
+</tr>
+<tr>
+<td>hmset <key1><field1><value1><field2><value2>…</td>
+<td>批量设置hash的值</td>
+</tr>
+<tr>
+<td>hexists<key1><field></td>
+<td>查看哈希表 key 中，给定域 field 是否存在。</td>
+</tr>
+<tr>
+<td>hkeys <key></td>
+<td>列出该hash集合的所有field</td>
+</tr>
+<tr>
+<td>hvals <key></td>
+<td>列出该hash集合的所有value</td>
+</tr>
+<tr>
+<td>hincrby <key><field><increment></td>
+<td>为哈希表 key 中的域 field 的值加上增量 1  -1</td>
+</tr>
+<tr>
+<td>hsetnx <key><field><value></td>
+<td>将哈希表 key 中的域 field 的值设置为 value ，当且仅当域 field 不存在</td>
+</tr>
+</tbody></table>
+<h2 id="Zset"><a href="#Zset" class="headerlink" title="Zset"></a>Zset</h2><p>比set多了个score分数属性，集合中的数据可以按照score的值进行排序</p>
+<table>
+<thead>
+<tr>
+<th>c</th>
+<th>o</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>zadd <key><score1><value1><score2><value2>…</td>
+<td>将一个或多个 member 元素及其 score 值加入到有序集 key 当中。</td>
+</tr>
+<tr>
+<td>zrange <key><start><stop> [WITHSCORES]</td>
+<td>返回有序集 key 中，下标在<start><stop>之间的元素带WITHSCORES，可以让分数一起和值返回到结果集。</td>
+</tr>
+<tr>
+<td>zrangebyscore key minmax [withscores] [limit offset count]</td>
+<td>返回有序集 key 中，所有 score 值介于 min 和 max 之间(包括等于 min 或 max )的成员。有序集成员按 score 值递增(从小到大)次序排列。</td>
+</tr>
+<tr>
+<td>zrevrangebyscore key maxmin [withscores] [limit offset count]</td>
+<td>同上，改为从大到小排列。</td>
+</tr>
+<tr>
+<td>zincrby <key><increment><value></td>
+<td>为元素的score加上增量</td>
+</tr>
+<tr>
+<td>zrem <key><value></td>
+<td>删除该集合下，指定值的元素</td>
+</tr>
+<tr>
+<td>zcount <key><min><max></td>
+<td>统计该集合，分数区间内的元素个数</td>
+</tr>
+<tr>
+<td>zrank <key><value></td>
+<td>返回该值在集合中的排名，从0开始。</td>
+</tr>
+</tbody></table>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p>注：建议配置文件使用自定义文件名称，方便遇到错误时排除是配置的问题</p>
+<h2 id="Units-单位"><a href="#Units-单位" class="headerlink" title="Units 单位"></a>Units 单位</h2><p>配置大小单位,开头定义了一些基本的度量单位，只支持bytes，不支持bit</p>
+<h2 id="includes"><a href="#includes" class="headerlink" title="includes"></a>includes</h2><p>导入</p>
+<h2 id="网络相关配置"><a href="#网络相关配置" class="headerlink" title="网络相关配置"></a>网络相关配置</h2><h3 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h3><p>默认情况<code>bind=127.0.0.1</code>只能接受本机的访问请求，不写的情况下，无限制接受任何ip地址的访问，生产环境肯定要写你应用服务器的地址；服务器是需要远程访问的，所以需要将其注释掉</p>
+<h3 id="protected-mode"><a href="#protected-mode" class="headerlink" title="protected-mode"></a>protected-mode</h3><p>保护模式，yes时只能本机访问，改为no可以远程访问</p>
+<h3 id="port"><a href="#port" class="headerlink" title="port"></a>port</h3><p>端口号，默认6379</p>
+<h3 id="tcp-backlog"><a href="#tcp-backlog" class="headerlink" title="tcp-backlog"></a>tcp-backlog</h3><p>设置tcp的backlog，backlog其实是一个连接队列，backlog队列总和&#x3D;未完成三次握手队列 + 已经完成三次握手队列。</p>
+<p>在高并发环境下你需要一个高backlog值来避免慢客户端连接问题。</p>
+<p>注意Linux内核会将这个值减小到&#x2F;proc&#x2F;sys&#x2F;net&#x2F;core&#x2F;somaxconn的值（128），所以需要确认增大&#x2F;proc&#x2F;sys&#x2F;net&#x2F;core&#x2F;somaxconn和&#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;tcp_max_syn_backlog（128）两个值来达到想要的效果</p>
+<h3 id="timeout"><a href="#timeout" class="headerlink" title="timeout"></a>timeout</h3><p>一个空闲的客户端维持多少秒会关闭，0表示关闭该功能。即永不关闭。</p>
+<h3 id="tcp-keepalive"><a href="#tcp-keepalive" class="headerlink" title="tcp-keepalive"></a>tcp-keepalive</h3><p>对访问客户端的一种心跳检测，每个n秒检测一次。单位为秒，如果设置为0，则不会进行Keepalive检测，建议设置成60 </p>
+<h2 id="general-通用"><a href="#general-通用" class="headerlink" title="general 通用"></a>general 通用</h2><h3 id="daemonize"><a href="#daemonize" class="headerlink" title="daemonize"></a>daemonize</h3><p>是否后台启动</p>
+<h3 id="pidfile"><a href="#pidfile" class="headerlink" title="pidfile"></a>pidfile</h3><p>存放pid文件的位置，每个实例会产生一个不同的pid文件。pid好像就是进程号</p>
+<h3 id="loglevel"><a href="#loglevel" class="headerlink" title="loglevel"></a>loglevel</h3><p>指定日志记录级别，Redis总共支持四个级别：debug、verbose、notice、warning，默认为notice四个级别根据使用阶段来选择，生产环境选择notice 或者warning</p>
+<h3 id="logfile"><a href="#logfile" class="headerlink" title="logfile"></a>logfile</h3><p>日志文件名称</p>
+<h3 id="databases"><a href="#databases" class="headerlink" title="databases"></a>databases</h3><p>默认数据库，后面加数据库id</p>
+<h2 id="security-安全"><a href="#security-安全" class="headerlink" title="security 安全"></a>security 安全</h2><p>设置密码，requirepass foobared。命令行中的临时密码</p>
+<h2 id="limits限制"><a href="#limits限制" class="headerlink" title="limits限制"></a>limits限制</h2><h3 id="maxclients"><a href="#maxclients" class="headerlink" title="maxclients"></a>maxclients</h3><p>默认可以连接多少客户端，默认为1000个</p>
+<h3 id="maxmemory"><a href="#maxmemory" class="headerlink" title="maxmemory"></a>maxmemory</h3><p>设置redis可以使用的内存量，防止服务器宕机</p>
+<h3 id="maxmemory-policy"><a href="#maxmemory-policy" class="headerlink" title="maxmemory-policy"></a>maxmemory-policy</h3><p>内存清理算法</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>描述</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>noeviction</td>
+<td>直接返回错误；</td>
+<td></td>
+</tr>
+<tr>
+<td>volatile-ttl</td>
+<td>从设置了过期时间的键中，选择过期时间最小的键，进行淘汰；</td>
+<td></td>
+</tr>
+<tr>
+<td>volatile-random</td>
+<td>从设置了过期时间的键中，随机选择键，进行淘汰；</td>
+<td></td>
+</tr>
+<tr>
+<td>volatile-lru</td>
+<td>从设置了过期时间的键中，使用LRU算法选择键，进行淘汰；</td>
+<td></td>
+</tr>
+<tr>
+<td>volatile-lfu</td>
+<td>从设置了过期时间的键中，使用LFU算法选择键，进行淘汰；</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>allleys-random</td>
+<td>从所有的键中，随机选择键，进行淘汰；</td>
+<td></td>
+</tr>
+<tr>
+<td>allkeys-lru</td>
+<td>从所有的键中，使用LRU算法选择键，进行淘汰；</td>
+<td></td>
+</tr>
+<tr>
+<td>allkeys-lfu</td>
+<td>从所有的键中，使用LFU算法选择键，进行淘汰；</td>
+<td>4.0</td>
+</tr>
+</tbody></table>
+<h3 id="maxmemory-samples"><a href="#maxmemory-samples" class="headerlink" title="maxmemory-samples"></a>maxmemory-samples</h3><p>设置样本数量，LRU算法和最小TTL算法都并非是精确的算法，而是估算值，所以你可以设置样本的大小，redis默认会检查这么多个key并选择其中LRU的那个。 一般设置3到7的数字，数值越小样本越不准确，但性能消耗越小。</p>
+<h1 id="redis的发布和订阅"><a href="#redis的发布和订阅" class="headerlink" title="redis的发布和订阅"></a>redis的发布和订阅</h1><p>Redis 发布订阅 (pub&#x2F;sub) 是一种消息通信模式：发送者 (pub) 发送消息，订阅者 (sub) 接收消息。</p>
+<p>订阅 <code>subscribe channelname</code></p>
+<p>发布信息 <code>publish channelname hello</code> 返回值为订阅者数量</p>
+<h1 id="redis新数据类型"><a href="#redis新数据类型" class="headerlink" title="redis新数据类型"></a>redis新数据类型</h1><h2 id="bitmaps"><a href="#bitmaps" class="headerlink" title="bitmaps"></a>bitmaps</h2>
     </div>
 
     
@@ -489,7 +644,10 @@
     <a href="/2022/11/23/hello-blog/" rel="prev" title="我的第一篇博客">
       <i class="fa fa-chevron-left"></i> 我的第一篇博客
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/23/Redis%20%E9%9D%A2%E7%BB%8F/" rel="next" title="reids面经">
+      reids面经 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -548,7 +706,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">redis简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E5%92%8C%E4%BC%A0%E7%BB%9F%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">redis和传统关系型数据库有什么不同？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">redis可以用来做什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E6%9C%89%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">redis有哪些数据类型？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">安装与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">2.2.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">2.3.</span> <span class="nav-text">基本操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">五大数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#String"><span class="nav-number">3.1.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-number">3.2.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set"><span class="nav-number">3.3.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash"><span class="nav-number">3.4.</span> <span class="nav-text">Hash</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">redis简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E5%92%8C%E4%BC%A0%E7%BB%9F%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">redis和传统关系型数据库有什么不同？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">redis可以用来做什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E6%9C%89%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">redis有哪些数据类型？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">安装与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">2.2.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">2.3.</span> <span class="nav-text">基本操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">五大数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#String"><span class="nav-number">3.1.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-number">3.2.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set"><span class="nav-number">3.3.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash"><span class="nav-number">3.4.</span> <span class="nav-text">Hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zset"><span class="nav-number">3.5.</span> <span class="nav-text">Zset</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Units-%E5%8D%95%E4%BD%8D"><span class="nav-number">4.1.</span> <span class="nav-text">Units 单位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#includes"><span class="nav-number">4.2.</span> <span class="nav-text">includes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE"><span class="nav-number">4.3.</span> <span class="nav-text">网络相关配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bind"><span class="nav-number">4.3.1.</span> <span class="nav-text">bind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#protected-mode"><span class="nav-number">4.3.2.</span> <span class="nav-text">protected-mode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#port"><span class="nav-number">4.3.3.</span> <span class="nav-text">port</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-backlog"><span class="nav-number">4.3.4.</span> <span class="nav-text">tcp-backlog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timeout"><span class="nav-number">4.3.5.</span> <span class="nav-text">timeout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-keepalive"><span class="nav-number">4.3.6.</span> <span class="nav-text">tcp-keepalive</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#general-%E9%80%9A%E7%94%A8"><span class="nav-number">4.4.</span> <span class="nav-text">general 通用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#daemonize"><span class="nav-number">4.4.1.</span> <span class="nav-text">daemonize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pidfile"><span class="nav-number">4.4.2.</span> <span class="nav-text">pidfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loglevel"><span class="nav-number">4.4.3.</span> <span class="nav-text">loglevel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logfile"><span class="nav-number">4.4.4.</span> <span class="nav-text">logfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#databases"><span class="nav-number">4.4.5.</span> <span class="nav-text">databases</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#security-%E5%AE%89%E5%85%A8"><span class="nav-number">4.5.</span> <span class="nav-text">security 安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#limits%E9%99%90%E5%88%B6"><span class="nav-number">4.6.</span> <span class="nav-text">limits限制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#maxclients"><span class="nav-number">4.6.1.</span> <span class="nav-text">maxclients</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#maxmemory"><span class="nav-number">4.6.2.</span> <span class="nav-text">maxmemory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#maxmemory-policy"><span class="nav-number">4.6.3.</span> <span class="nav-text">maxmemory-policy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#maxmemory-samples"><span class="nav-number">4.6.4.</span> <span class="nav-text">maxmemory-samples</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#redis%E7%9A%84%E5%8F%91%E5%B8%83%E5%92%8C%E8%AE%A2%E9%98%85"><span class="nav-number">5.</span> <span class="nav-text">redis的发布和订阅</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#redis%E6%96%B0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text">redis新数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bitmaps"><span class="nav-number">6.1.</span> <span class="nav-text">bitmaps</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -562,12 +720,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
