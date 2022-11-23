@@ -20,19 +20,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="注：此篇文章脱胎于尚硅谷redis课程的笔记文件，另外加上自己遇到的问题和疑惑 redis简介redis和传统关系型数据库有什么不同？ Redis是一种基于键值对的NoSQL数据库，而键值对的值是由多种数据结构和算法组成的。Redis的数据都存储于内存中，因此它的速度惊人，读写性能可达10万&#x2F;秒，远超关系型数据库。  关系型数据库是基于二维数据表来存储数据的，它的数据格式更为严谨，并支持">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2022/11/23/hello-world/index.html">
+<meta property="og:title" content="redis笔记">
+<meta property="og:url" content="http://example.com/2022/11/23/redis%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="fx的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="注：此篇文章脱胎于尚硅谷redis课程的笔记文件，另外加上自己遇到的问题和疑惑 redis简介redis和传统关系型数据库有什么不同？ Redis是一种基于键值对的NoSQL数据库，而键值对的值是由多种数据结构和算法组成的。Redis的数据都存储于内存中，因此它的速度惊人，读写性能可达10万&#x2F;秒，远超关系型数据库。  关系型数据库是基于二维数据表来存储数据的，它的数据格式更为严谨，并支持">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-11-23T05:13:20.608Z">
-<meta property="article:modified_time" content="2022-11-23T05:13:20.609Z">
+<meta property="article:published_time" content="2022-11-23T07:17:27.000Z">
+<meta property="article:modified_time" content="2022-11-23T07:36:47.178Z">
 <meta property="article:author" content="fx">
+<meta property="article:tag" content="redis">
+<meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/11/23/hello-world/">
+<link rel="canonical" href="http://example.com/2022/11/23/redis%E7%AC%94%E8%AE%B0/">
 
 
 <script id="page-configurations">
@@ -45,7 +47,7 @@
   };
 </script>
 
-  <title>Hello World | fx的博客</title>
+  <title>redis笔记 | fx的博客</title>
   
 
 
@@ -151,7 +153,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/23/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/23/redis%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -164,7 +166,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          redis笔记
         </h1>
 
         <div class="post-meta">
@@ -173,8 +175,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-11-23 13:13:20" itemprop="dateCreated datePublished" datetime="2022-11-23T13:13:20+08:00">2022-11-23</time>
+              <time title="创建时间：2022-11-23 15:17:27 / 修改时间：15:36:47" itemprop="dateCreated datePublished" datetime="2022-11-23T15:17:27+08:00">2022-11-23</time>
             </span>
 
           
@@ -188,19 +191,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <p>注：此篇文章脱胎于<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Rv41177Af/?spm_id_from=333.337.search-card.all.click">尚硅谷redis课程</a>的笔记文件，另外加上自己遇到的问题和疑惑</p>
+<h1 id="redis简介"><a href="#redis简介" class="headerlink" title="redis简介"></a>redis简介</h1><h2 id="redis和传统关系型数据库有什么不同？"><a href="#redis和传统关系型数据库有什么不同？" class="headerlink" title="redis和传统关系型数据库有什么不同？"></a>redis和传统关系型数据库有什么不同？</h2><ul>
+<li><p>Redis是一种基于键值对的NoSQL数据库，而键值对的值是由多种数据结构和算法组成的。Redis的数据都存储于内存中，因此它的速度惊人，读写性能可达10万&#x2F;秒，远超关系型数据库。</p>
+</li>
+<li><p>关系型数据库是基于二维数据表来存储数据的，它的数据格式更为严谨，并支持关系查询。关系型数据库的数据存储于磁盘上，可以存放海量的数据，但性能远不如Redis。</p>
+</li>
+</ul>
+<h2 id="redis可以用来做什么？"><a href="#redis可以用来做什么？" class="headerlink" title="redis可以用来做什么？"></a>redis可以用来做什么？</h2><ol>
+<li>Redis最常用来做缓存，是实现分布式缓存的首先中间件；</li>
+<li>Redis可以作为数据库，实现诸如点赞、关注、排行等对性能要求极高的互联网需求；</li>
+<li>Redis可以作为计算工具，能用很小的代价，统计诸如PV&#x2F;UV、用户在线天数等数据；</li>
+<li>Redis还有很多其他的使用场景，例如：可以实现分布式锁，可以作为消息队列使用。</li>
+</ol>
+<h2 id="redis有哪些数据类型？"><a href="#redis有哪些数据类型？" class="headerlink" title="redis有哪些数据类型？"></a>redis有哪些数据类型？</h2><ol>
+<li>Redis支持5种核心的数据类型，分别是字符串、哈希、列表、集合、有序集合；</li>
+<li>Redis还提供了Bitmap、HyperLogLog、Geo类型，但这些类型都是基于上述核心数据类型实现的；</li>
+<li>Redis在5.0新增加了Streams数据类型，它是一个功能强大的、支持多播的、可持久化的消息队列。</li>
+</ol>
+<h1 id="安装与使用"><a href="#安装与使用" class="headerlink" title="安装与使用"></a>安装与使用</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>按照<a target="_blank" rel="noopener" href="http://redis.io/">redis官网</a>介绍：输入指令<code>apt install redis</code>即可</p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p><code>redis-server /reids.conf</code></p>
+<p><code>service redis-server start</code></p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p><code>redis-cli -p port</code></p>
 
     </div>
 
@@ -209,17 +221,21 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/redis/" rel="tag"># redis</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          </div>
 
         
 
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2022/11/23/hello-blog/" rel="next" title="我的第一篇博客">
-      我的第一篇博客 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/11/23/hello-blog/" rel="prev" title="我的第一篇博客">
+      <i class="fa fa-chevron-left"></i> 我的第一篇博客
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -278,7 +294,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">redis简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E5%92%8C%E4%BC%A0%E7%BB%9F%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">redis和传统关系型数据库有什么不同？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">redis可以用来做什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E6%9C%89%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">redis有哪些数据类型？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">安装与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">2.2.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C"><span class="nav-number">2.3.</span> <span class="nav-text">操作</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
